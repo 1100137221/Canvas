@@ -7,6 +7,11 @@
         drawRect();
         drawTriangle();
         drawSmile();
+        drawMessageBox();
+        drawImage();
+        drawPainter();
+        drawActColor();
+        drawfont();
       }
       //畫矩形
       function drawRect(){
@@ -55,10 +60,82 @@
                 ctx.arc(60,65,5,0,Math.PI*2,true);  // Left eye
                 ctx.moveTo(95,65);
                 ctx.arc(90,65,5,0,Math.PI*2,true);  // Right eye
+                //畫邊寬
                 ctx.stroke();
             }
       }
 
+      //畫對話寬寬
+      function drawMessageBox(){
+            var canvas = document.getElementById('CanvasMessageBox');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+
+                // Quadratric curves example
+                ctx.beginPath();
+                ctx.moveTo(75,25);
+                ctx.quadraticCurveTo(25,25,25,62.5);
+                ctx.quadraticCurveTo(25,100,50,100);
+                ctx.quadraticCurveTo(50,120,30,125);
+                ctx.quadraticCurveTo(60,120,65,100);
+                ctx.quadraticCurveTo(125,100,125,62.5);
+                ctx.quadraticCurveTo(125,25,75,25);
+                ctx.stroke();
+            }
+      }
+      //畫圖片
+      function drawImage(){
+            var ctx = document.getElementById('CanvasImage').getContext('2d');
+            var img = new Image();
+            img.onload = function(){
+                //參數依序: 圖片檔案, x, Y
+                ctx.drawImage(img,0,0);
+                ctx.beginPath();
+                ctx.moveTo(30,96);
+                ctx.lineTo(70,66);
+                ctx.lineTo(103,76);
+                ctx.lineTo(170,15);
+                ctx.stroke();
+            };
+            img.src = 'https://mdn.mozillademos.org/files/5395/backdrop.png';
+      }
+      //畫小畫家
+      function drawPainter(){
+            var ctx = document.getElementById('CanvasPainter').getContext('2d');
+            for (var i=0;i<6;i++){
+                for (var j=0;j<6;j++){
+                    ctx.fillStyle = 'rgb(' + Math.floor(255-42.5*i) + ',' +
+                                    Math.floor(255-42.5*j) + ',0)';
+                    ctx.fillRect(j*25,i*25,25,25);
+                }
+            }
+      }
+      //畫有顏色的圓形
+      function drawActColor(){
+            var ctx = document.getElementById('canvasActColor').getContext('2d');
+            for (var i=0;i<6;i++){
+                for (var j=0;j<6;j++){
+                    ctx.strokeStyle = 'rgb(0,' + Math.floor(255-42.5*i) + ',' + 
+                                    Math.floor(255-42.5*j) + ')';
+                    ctx.beginPath();
+                    ctx.arc(12.5+j*25,12.5+i*25,10,0,Math.PI*2,true);
+                    ctx.stroke();
+                }
+            }
+      }
+      //寫字
+      function drawfont(){
+            var ctx = document.getElementById('canvasText').getContext('2d');
+
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            ctx.shadowBlur = 2;
+            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+            
+            ctx.font = "20px Times New Roman";
+            ctx.fillStyle = "Black";
+            ctx.fillText("Sample String", 5, 30);
+      }
     </script>
     <style type="text/css">
       canvas { border: 1px solid black; }
@@ -66,13 +143,32 @@
   </head>
   <body onload="draw();">
       <div>
-          <canvas id="CanvasRect" width="150" height="150"></canvas>
+            <div style="float:left;">
+                <canvas id="CanvasRect" width="150" height="150"></canvas>
+            </div>
+            <div style="float:left;">
+                <canvas id='CanvasTriangle' width="150" height="150"></canvas>
+            </div>
+            <div style="float:left;">
+                <canvas id='CanvasSmile' width="150" height="150"></canvas>
+            </div>
+            <div style="float:left;">
+                <canvas id='CanvasMessageBox' width="150" height="150"></canvas>
+            </div>
+            <div style="float:left;">
+                <canvas id='CanvasImage' width="150" height="150"></canvas>
+            </div>
       </div>
-      <div>
-          <canvas id='CanvasTriangle' width="150" height="150"></canvas>
-      </div>
-      <div>
-          <canvas id='CanvasSmile' width="150" height="150"></canvas>
+      <div style="clear:both;">
+          <div style="float:left;">
+                <canvas id='CanvasPainter' width="150" height="150"></canvas>
+           </div>
+           <div style="float:left;">
+                <canvas id='canvasActColor' width="150" height="150"></canvas>
+           </div>
+           <div style="float:left;">
+                <canvas id='canvasText' width="150" height="150"></canvas>
+           </div>
       </div>
   </body>
 </html>
