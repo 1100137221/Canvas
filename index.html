@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+      //初始化
+      function draw(){
+        drawRect();
+        drawTriangle();
+        drawSmile();
+      }
+      //畫矩形
+      function drawRect(){
+        var canvas = document.getElementById("CanvasRect");
+        if (canvas.getContext) {
+            
+            var ctx = canvas.getContext("2d");
+
+            //參數依順序: X , Y , 寬 , 高
+            //換一個矩形
+            ctx.fillRect(25,25,100,100);
+            //清空一個矩形
+            ctx.clearRect(45,45,60,60);
+            //換一個矩形的邊寬
+            ctx.strokeRect(50,50,50,50);
+        }
+      }
+      //畫三角形
+      function drawTriangle(){
+            var canvas = document.getElementById('CanvasTriangle');
+            if (canvas.getContext){
+                var ctx = canvas.getContext('2d');
+                //開始畫路徑
+                ctx.beginPath();
+                //移到初始點
+                ctx.moveTo(75,50);
+                ctx.lineTo(100,75);
+                ctx.lineTo(100,25);
+                //將圍住的路徑顏色填滿
+                ctx.fill();
+            }
+      }
+      //畫笑臉
+      function drawSmile(){
+            var canvas = document.getElementById('CanvasSmile');
+            if (canvas.getContext){
+                var ctx = canvas.getContext('2d');
+
+                //開始畫路徑
+                ctx.beginPath();
+                //參數依順序: X, Y, r, sAngle(起始值), eAngle(結束值), counterclockwise(False順時針,True逆時針)
+                ctx.arc(75,75,50,0,Math.PI*2,true); // Outer circle
+                ctx.moveTo(110,75);
+                ctx.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
+                ctx.moveTo(65,65);
+                ctx.arc(60,65,5,0,Math.PI*2,true);  // Left eye
+                ctx.moveTo(95,65);
+                ctx.arc(90,65,5,0,Math.PI*2,true);  // Right eye
+                ctx.stroke();
+            }
+      }
+
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="draw();">
+      <div>
+          <canvas id="CanvasRect" width="150" height="150"></canvas>
+      </div>
+      <div>
+          <canvas id='CanvasTriangle' width="150" height="150"></canvas>
+      </div>
+      <div>
+          <canvas id='CanvasSmile' width="150" height="150"></canvas>
+      </div>
+  </body>
+</html>
